@@ -2,14 +2,17 @@ const express = require("express");
 const axios = require("axios");
 const router = express.Router();
 
-// Replace with your actual provider resource:
-// //iam.googleapis.com/projects/598593555902/locations/global/workloadIdentityPools/entra-id-provider/providers/entra-id-provider
-const GCP_WIF_PROVIDER_AUDIENCE = "//iam.googleapis.com/projects/598593555902/locations/global/workloadIdentityPools/entra-id-provider/providers/entra-id-provider";
+// Replace with your actual provider resource string
+// Format: //iam.googleapis.com/projects/<PROJECT_NUMBER>/locations/global/workloadIdentityPools/<POOL_ID>/providers/<PROVIDER_ID>
+const GCP_WIF_PROVIDER_AUDIENCE =
+  "//iam.googleapis.com/projects/598593555902/locations/global/workloadIdentityPools/entra-id-provider/providers/entra-id-provider";
 
 router.post("/token/exchange", async (req, res) => {
   const incomingToken = req.body.token || req.token; // prefer body.token; fall back to Bearer
   if (!incomingToken) {
-    return res.status(400).json({ error: "token is required in body or Authorization header" });
+    return res
+      .status(400)
+      .json({ error: "token is required in body or Authorization header" });
   }
 
   try {
@@ -22,7 +25,10 @@ router.post("/token/exchange", async (req, res) => {
         subject_token: incomingToken,
         audience: GCP_WIF_PROVIDER_AUDIENCE
       },
-      { headers: { "Content-Type": "application/json" }, timeout: 10000 }
+      {
+        headers: { "Content-Type": "application/json" },
+        timeout: 10000
+      }
     );
 
     return res.json({
