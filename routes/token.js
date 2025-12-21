@@ -208,7 +208,8 @@ const jwt = require("jsonwebtoken");
 const router = express.Router();
 
 const GCP_WIF_PROVIDER_AUDIENCE =
-  "7a500288-3260-4530-b5bb-a79c37c6bf3c";
+  "//iam.googleapis.com/projects/598593555902/locations/global/workloadIdentityPools/entra-id-pool/providers/entra-id-provider";
+  // "7a500288-3260-4530-b5bb-a79c37c6bf3c";
 
 router.post("/token/exchange", async (req, res) => {
   const incomingTokenRaw = req.body.token || req.token || req.headers["authorization"];
@@ -270,4 +271,5 @@ router.post("/token/exchange", async (req, res) => {
 });
 
 module.exports = router;
+
 
