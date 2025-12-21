@@ -237,7 +237,8 @@ router.post("/token/exchange", async (req, res) => {
       subjectTokenType: "urn:ietf:params:oauth:token-type:jwt",
       subjectToken: incomingToken,
       audience: GCP_WIF_PROVIDER_AUDIENCE,
-      requestedTokenType: "urn:ietf:params:oauth:token-type:access_token"
+      requestedTokenType: "urn:ietf:params:oauth:token-type:access_token",
+      scope:"https://www.googleapis.com/auth/cloud-platform"
     };
 
     const { data } = await axios.post(
@@ -269,3 +270,4 @@ router.post("/token/exchange", async (req, res) => {
 });
 
 module.exports = router;
+
